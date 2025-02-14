@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<testsuite failures="0" skipped="0" name="cucumber-js" time="0.131762311" tests="10">
+  <testcase classname="Get person disability details from DR" name="Successfully get disability details from DR" time="0.034339143">
+    <system-out><![CDATA[Given System wants to get a person disability details.....................passed
+When A POST request to get disability details is sent.....................passed
+Then The response from the get disability details should be received......passed
+And The get disability details response should have status 200............passed
+And The get disability details response should have "Content-Type": "ap...passed
+And The get disability details response should be returned in a timely ...passed
+And The get disability details response should match the expected JSON ...passed]]></system-out>
+  </testcase>
+  <testcase classname="Get person disability status from DR" name="Successfully get disability status from DR" time="0.012197293">
+    <system-out><![CDATA[Given System wants to get a person disability status......................passed
+When A POST request to get disability status is sent......................passed
+Then The response from the get disability status should be received.......passed
+And The get disability status response should have status 200.............passed
+And The get disability status response should have "Content-Type": "app...passed
+And The get disability status response should be returned in a timely m...passed
+And The get disability status response should match the expected JSON s...passed]]></system-out>
+  </testcase>
+  <testcase classname="Get person disability support from DR" name="Successfully get disability support from DR" time="0.010386989000000001">
+    <system-out><![CDATA[Given System wants to get a person disability support.....................passed
+When A POST request to get disability support is sent.....................passed
+Then The response from the get disability support should be received......passed
+And The get disability support response should have status 200............passed
+And The get disability support response should have "Content-Type": "ap...passed
+And The get disability support response should be returned in a timely ...passed
+And The get disability support response should match the expected JSON ...passed]]></system-out>
+  </testcase>
+  <testcase classname="Receive async search results from SR through a callback" name="Successfully receive async search results from DR" time="0.009410492">
+    <system-out><![CDATA[Given SP has previously sent a search request to DR.......................passed
+When DR completes processing and calls SP on-search callback..............passed
+Then SP should receive the on-search response from DR.....................passed
+And The on-search response should have status 200.........................passed
+And The on-search response should have "Content-Type": "application/jso...passed
+And The on-search response should be received within 15000ms..............passed
+And The on-search response should match the expected JSON schema..........passed]]></system-out>
+  </testcase>
+  <testcase classname="Callback for Subscribe To DR based on specific criteria" name="Successfully receive async subscribe results from DR" time="0.012793603999999998">
+    <system-out><![CDATA[Given SP has previously sent a subscribe request to DR....................passed
+When DR completes processing and calls SP on-subscribe callback...........passed
+Then SP should receive the on-subscribe response from DR..................passed
+And The on-subscribe response should have status 200......................passed
+And The on-subscribe response should have "Content-Type": "application/...passed
+And The on-subscribe response should be returned in a timely manner 150...passed
+And The on-subscribe response should match json schema....................passed]]></system-out>
+  </testcase>
+  <testcase classname="callback for Unsubscribe from SR" name="Successfully  receive async unsubscribe results from DR" time="0.010573146">
+    <system-out><![CDATA[Given SP has previously sent an unsubscribe request to DR.................passed
+When DR completes processing and calls SP on-unsubscribe callback.........passed
+Then SP should receive the on-unsubscribe response from DR................passed
+And The on-unsubscribe response should have status 200....................passed
+And The on-unsubscribe response should have "Content-Type": "applicatio...passed
+And The on-unsubscribe response should be returned in a timely manner 1...passed
+And The on-unsubscribe response should match json schema..................passed]]></system-out>
+  </testcase>
+  <testcase classname="Search person from DR based on specific criteria" name="Successfully search DR to be processed" time="0.013257707">
+    <system-out><![CDATA[Given System wants to search for person in DR.............................passed
+When A POST request to search is sent.....................................passed
+Then The response from the search should be received......................passed
+And The search response should have status 200............................passed
+And The search response should have "Content-Type": "application/json" ...passed
+And The search response should be returned in a timely manner within 15...passed
+And The search response should match the expected JSON schema.............passed]]></system-out>
+  </testcase>
+  <testcase classname="Subscribe To DR based on specific criteria" name="Successfully subscribe to get new persons from DR to be processed smoke type test" time="0.008711771000000002">
+    <system-out><![CDATA[Given System wanna subscribe to get new persons from DR...................passed
+When POST request to subscribe is sent....................................passed
+Then The response from the subscribe is received..........................passed
+And The subscribe response should have status 200.........................passed
+And The subscribe response should have "Content-Type": "application/jso...passed
+And The subscribe response should be returned in a timely manner 15000m...passed
+And The subscribe response should match json schema.......................passed]]></system-out>
+  </testcase>
+  <testcase classname="Search perspn from DR based on specific criteria" name="Successfully search DR to be processed" time="0.009441356000000001">
+    <system-out><![CDATA[Given System wants to sync search for person in DR........................passed
+When A POST request to sync search is sent................................passed
+Then The response from the sync search should be received.................passed
+And The sync search response should have status 200.......................passed
+And The sync search response should have "Content-Type": "application/j...passed
+And The sync search response should be returned in a timely manner with...passed
+And The sync search response should match the expected JSON schema........passed]]></system-out>
+  </testcase>
+  <testcase classname="Unsubscribe from DR based on specific criteria" name="Successfully unsubscribe from DR to be processed smoke type test" time="0.01065081">
+    <system-out><![CDATA[Given System wanna unsubscribe from DR....................................passed
+When POST request to unsubscribe is sent..................................passed
+Then The response from the unsubscribe is received........................passed
+And The unsubscribe response should have status 200.......................passed
+And The unsubscribe response should have "Content-Type": "application/j...passed
+And The unsubscribe response should be returned in a timely manner 1500...passed
+And The unsubscribe response should match json schema.....................passed]]></system-out>
+  </testcase>
+</testsuite>

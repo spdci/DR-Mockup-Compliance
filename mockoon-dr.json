@@ -1,0 +1,540 @@
+{
+    "uuid": "e94a4170-6ef6-4b0a-978d-be91893e9a64",
+    "lastMigration": 27,
+    "name": "DRInteroperability",
+    "endpointPrefix": "",
+    "latency": 0,
+    "port": 3003,
+    "hostname": "",
+    "routes": [
+      {
+        "uuid":"003b7329-926a-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Search specific person",
+        "method": "post",
+        "endpoint": "dr/sync/search",
+        "request": {
+          "body": {
+            "identifier_value": "847951632"  
+          },
+          "rules": [
+            {
+              "key": "body.identifier_value",
+              "operator": "exists",
+              "value": "true"
+            },
+            {
+              "key": "body.identifier_value",
+              "operator": "matches",
+              "value": "^[0-9]{9}$" 
+            }
+          ],
+          "rulesOperator": "AND"
+        },
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c13",
+            "body": "{\n  \"message\": {\n    \"transaction_id\": 123456789,\n    \"correlation_id\": \"9876543210\",\n    \"search_response\": [\n      {\n        \"reference_id\": \"12345678901234567890\",\n        \"timestamp\": \"\",\n        \"status\": \"rcvd\",\n        \"status_reason_code\": \"rjct.reference_id.invalid\",\n        \"status_reason_message\": \"string\",\n        \"data\": {\n          \"version\": \"1.0.0\",\n          \"reg_records\": [\n            {\n\"personal_details\": {\n\"identifier\": \"123456\",\n\"name\": {\n\"first_name\": \"John\",\n\"last_name\": \"Doe\"\n},\n\"date_of_birth\": \"1990-05-15\",\n\"gender\": \"Male\"\n},\n\"disability_status\": \"Approved\",\n\"disability_level\": \"Severe\",\n\"disability_details\": [\n{\n\"impairment_type\": \"Physical and movement related functions\",\n\"impairment_level\": \"Severe impairment or difficulty\",\n\"impairment_cause\": \"Work Accident\",\n\"age_on_set\": \"Working age\"\n}\n],\n\"disability_support\": [\n{\n\"human_assistance\": {\n\"frequency\": \"Permanent\",\n\"type\": \"mobility\",\n\"support_status\": \"Required\"\n}\n}\n],\n\"transport_requirement\": \"Adaptable vehical\",\n\"housing_type\": \"Social housing\",\n\"registration_date\": \"2023-01-10T00:00:00Z\",\n\"last_updated\": \"2023-09-20T00:00:00Z\"\n}\n          ]\n        },\n        \"pagination\": {\n          \"page_size\": 2000,\n          \"page_number\": 5,\n          \"total_count\": 24250\n        },\n        \"locale\": \"en\"\n      }\n    ]\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Search DR",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+              {
+                "key": "body",
+                "operator": "contains",
+                "value": "\"identifier_value\": \"847951632\""
+              }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": true,
+            "default": false
+          }      
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"003b7338-826a-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Get specific person disability support",
+        "method": "post",
+        "endpoint": "dr/sync/get-disability-support",
+        "request": {
+          "body": {
+            "identifier_value": "847951632"  
+          },
+          "rules": [
+            {
+              "key": "body.identifier_value",
+              "operator": "exists",
+              "value": "true"
+            },
+            {
+              "key": "body.identifier_value",
+              "operator": "matches",
+              "value": "^[0-9]{9}$" 
+            }
+          ],
+          "rulesOperator": "AND"
+        },
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c13",
+            "body": "{\n  \"message\": {\n    \"transaction_id\": 123456789,\n    \"correlation_id\": \"9876543210\",\n    \"search_response\": [\n      {\n        \"reference_id\": \"12345678901234567890\",\n        \"timestamp\": \"\",\n        \"status\": \"rcvd\",\n        \"status_reason_code\": \"rjct.reference_id.invalid\",\n        \"status_reason_message\": \"string\",\n        \"data\": {\n          \"version\": \"1.0.0\",\n          \"reg_records\": [\n            [\n              {\n                \"human_assistance\": {\n                  \"type\": \"mobility\",\n                  \"frequency\": \"Daily\",\n                  \"support_status\": \"Needed\",\n                  \"caregiver\": {\n                    \"id\": \"Person_001\",\n                    \"name\": \"John Doe\",\n                    \"identifier\": \"12345\"\n                  },\n                  \"relationship\": \"Parent\",\n                  \"registration_date\": \"2024-01-15T10:00:00Z\",\n                  \"last_updated\": \"2024-09-20T12:30:00Z\"\n                },\n                \"assistive_technology\": [],\n                \"housing_support\": [],\n                \"medical_care\": [],\n                \"animal_assistance\": [],\n                \"registration_date\": \"2023-05-20T09:00:00Z\",\n                \"last_updated\": \"2024-10-01T11:15:00Z\"\n              }\n            ]\n          ]\n        },\n        \"pagination\": {\n          \"page_size\": 2000,\n          \"page_number\": 5,\n          \"total_count\": 24250\n        },\n        \"locale\": \"en\"\n      }\n    ]\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Disability support",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+              {
+                "key": "body",
+                "operator": "contains",
+                "value": "\"identifier_value\": \"847951632\""
+              }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": true,
+            "default": false
+          }      
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"003b7337-726a-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Get specific person disability details",
+        "method": "post",
+        "endpoint": "dr/sync/get-disability-details",
+        "request": {
+          "body": {
+            "identifier_value": "847951632"  
+          },
+          "rules": [
+            {
+              "key": "body.identifier_value",
+              "operator": "exists",
+              "value": "true"
+            },
+            {
+              "key": "body.identifier_value",
+              "operator": "matches",
+              "value": "^[0-9]{9}$" 
+            }
+          ],
+          "rulesOperator": "AND"
+        },
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c13",
+            "body": "{\n  \"message\": {\n    \"transaction_id\": 123456789,\n    \"correlation_id\": \"9876543210\",\n    \"search_response\": [\n      {\n        \"reference_id\": \"12345678901234567890\",\n        \"timestamp\": \"\",\n        \"status\": \"rcvd\",\n        \"status_reason_code\": \"rjct.reference_id.invalid\",\n        \"status_reason_message\": \"string\",\n        \"data\": {\n          \"version\": \"1.0.0\",\n          \"reg_records\": [\n            {\n              \"disability_details\": [\n                {\n                  \"impairment_type\": \"Physical and movement related functions\",\n                  \"impairment_level\": \"Severe impairment or difficulty\",\n                  \"impairment_cause\": \"Work Accident\",\n                  \"age_on_set\": \"Working age\"\n                }\n              ]\n            }\n          ]\n        },\n        \"pagination\": {\n          \"page_size\": 2000,\n          \"page_number\": 5,\n          \"total_count\": 24250\n        },\n        \"locale\": \"en\"\n      }\n    ]\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Search DR",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+              {
+                "key": "body",
+                "operator": "contains",
+                "value": "\"identifier_value\": \"847951632\""
+              }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": true,
+            "default": false
+          }      
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"003b7336-626a-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Get specific person disability status",
+        "method": "post",
+        "endpoint": "dr/sync/get-disability-status",
+        "request": {
+          "body": {
+            "identifier_value": "847951632"  
+          },
+          "rules": [
+            {
+              "key": "body.identifier_value",
+              "operator": "exists",
+              "value": "true"
+            },
+            {
+              "key": "body.identifier_value",
+              "operator": "matches",
+              "value": "^[0-9]{9}$" 
+            }
+          ],
+          "rulesOperator": "AND"
+        },
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c13",
+            "body": "{\n \n  \"message\": {\n    \"transaction_id\": 123456789,\n    \"correlation_id\": \"9876543210\",\n    \"disabled_response\": [\n      {\n        \"reference_id\": \"12345678901234567890\",\n        \"timestamp\": \"\",\n        \"status\": \"rcvd\",\n        \"status_reason_message\": \"string\",\n        \"disabled_status\": \"yes\"\n      }\n    ]\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Search DR",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+              {
+                "key": "body",
+                "operator": "contains",
+                "value": "\"identifier_value\": \"847951632\""
+              }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": true,
+            "default": false
+          }      
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid": "003b7340-926b-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Async search",
+        "method": "post",
+        "endpoint": "dr/search",
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c14",
+            "body": "{\n  \"message\": {\n    \"ack_status\": \"ACK\",\n    \"timestamp\": \"\",\n    \"error\": {\n      \"code\": \"err.request.bad\",\n      \"message\": \"string\"\n    },\n    \"correlation_id\": \"9876543210\"\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Async search initiated",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid": "003b7341-926b-4b8b-9bf4-eabdd9733dff",
+        "documentation": "Async on-search",
+        "method": "post",
+        "endpoint": "dr/on-search",
+        "responses": [
+          {
+            "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c15",
+            "body": "{\n  \"message\": {\n    \"ack_status\": \"ACK\",\n    \"timestamp\": \"\",\n    \"error\": {\n      \"code\": \"err.request.bad\",\n      \"message\": \"string\"\n    },\n    \"correlation_id\": \"9876543210\"\n  }\n}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "Async search result",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a7331-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "subscribe to an event",
+        "method": "post",
+        "endpoint": "dr/subscribe",
+        "responses": [
+          {
+            "uuid": "e1e15dcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a8331-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "callback for subscribe to an event",
+        "method": "post",
+        "endpoint": "dr/on-subscribe",
+        "responses": [
+          {
+            "uuid": "e1e15dcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a8431-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "unsubscribe from an event",
+        "method": "post",
+        "endpoint": "dr/unsubscribe",
+        "responses": [
+          {
+            "uuid": "e1e14rcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      },
+      {
+        "uuid":"004a8431-926b-4b5b-9bf4-eabdd9733dff",
+        "documentation": "on unsubscribe from an event",
+        "method": "post",
+        "endpoint": "dr/on-unsubscribe",
+        "responses": [
+          {
+            "uuid": "e1e14rcf-b6f8-43d7-2fg3-7dddbcfd9c13",
+            "body": "{\"message\":{\"ack_status\":\"ACK\",\"timestamp\":\"\",\"error\":{\"code\":\"err.request.bad\",\"message\":\"string\"},\"correlation_id\":\"9876543210\"}}",
+            "latency": 0,
+            "statusCode": 200,
+            "label": "subscribe to specific event",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "INLINE",
+            "filePath": "",
+            "databucketID": "",
+            "sendFileAsBody": false,
+            "rules": [
+                {
+                    "target": "body",
+                    "modifier": "transaction_id",
+                    "value": "123456789",
+                    "invert": false,
+                    "operator": "equals"
+                }
+            ],
+            "rulesOperator": "AND",
+            "disableTemplating": false,
+            "fallbackTo404": false,
+            "default": false
+          }
+        ],
+        "enabled": true,
+        "responseMode": null,
+        "type": "http"
+      }
+    ],
+    "proxyMode": false,
+    "proxyHost": "",
+    "proxyRemovePrefix": false,
+    "tlsOptions": {
+      "enabled": false,
+      "type": "CERT",
+      "pfxPath": "",
+      "certPath": "",
+      "keyPath": "",
+      "caPath": "",
+      "passphrase": ""
+    },
+    "cors": true,
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "proxyReqHeaders": [
+      {
+        "key": "",
+        "value": ""
+      }
+    ],
+    "proxyResHeaders": [
+      {
+        "key": "",
+        "value": ""
+      }
+    ],
+    "data": [],
+    "folders": [],
+    "rootChildren": [
+      {
+        "type": "route",
+        "uuid": "003b7329-926a-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"003b7340-926b-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"003b7341-926b-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a7331-926b-4b5b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a8331-926b-4b5b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"004a8431-926b-4b5b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"003b7338-826a-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"003b7337-726a-4b8b-9bf4-eabdd9733dff"
+      },
+      {
+        "type":"route",
+        "uuid":"003b7336-626a-4b8b-9bf4-eabdd9733dff"
+      }
+    ]
+  }
