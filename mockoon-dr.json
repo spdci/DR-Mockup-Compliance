@@ -147,7 +147,7 @@
         "responses": [
           {
             "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c13",
-            "body": "{\n  \"message\": {\n    \"transaction_id\": 123456789,\n    \"correlation_id\": \"9876543210\",\n    \"search_response\": [\n      {\n        \"reference_id\": \"12345678901234567890\",\n        \"timestamp\": \"\",\n        \"status\": \"rcvd\",\n        \"status_reason_code\": \"rjct.reference_id.invalid\",\n        \"status_reason_message\": \"string\",\n        \"data\": {\n          \"version\": \"1.0.0\",\n          \"reg_records\": [\n            {\n              \"disability_details\": [\n                {\n                  \"impairment_type\": \"Physical and movement related functions\",\n                  \"impairment_level\": \"Severe impairment or difficulty\",\n                  \"impairment_cause\": \"Work Accident\",\n                  \"age_on_set\": \"Working age\"\n                }\n              ]\n            }\n          ]\n        },\n        \"pagination\": {\n          \"page_size\": 2000,\n          \"page_number\": 5,\n          \"total_count\": 24250\n        },\n        \"locale\": \"en\"\n      }\n    ]\n  }\n}",
+            "body": "{\n  \"transaction_id\": 123456789,\n  \"correlation_id\": \"9876543210\",\n  \"search_response\": [\n    {\n      \"reference_id\": \"12345678901234567890\",\n      \"timestamp\": \"\",\n      \"status\": \"rcvd\",\n      \"status_reason_code\": \"rjct.reference_id.invalid\",\n      \"status_reason_message\": \"string\",\n      \"data\": {\n        \"version\": \"1.0.0\",\n        \"reg_type\": \"ns:org:RegistryType:DR\",\n        \"reg_record_type\": \"spdci-extensions-dci:DisabledPerson\",\n        \"reg_records\": {\n          \"type\": \"object\",\n          \"description\": \"1. Attributes of a person to create fetch records, create verifiable credentials or use in search criteria.\\n\\n\\n@context: https://schema.spdci.org/extensions/dr/v1/DRPerson.jsonld <br>\\n@type: \\\"@context\\\" <br>\\n\",\n          \"example\": {\n            \"personal_details\": {\n              \"identifier\": \"123456\",\n              \"name\": {\n                \"first_name\": \"John\",\n                \"last_name\": \"Doe\"\n              },\n              \"date_of_birth\": \"1990-05-15\",\n              \"gender\": \"Male\"\n            },\n            \"disability_status\": \"Approved\",\n            \"disability_level\": \"Severe\",\n            \"disability_details\": [\n              {\n                \"impairment_type\": \"Physical and movement related functions\",\n                \"impairment_level\": \"Severe impairment or difficulty\",\n                \"impairment_cause\": \"Work Accident\",\n                \"age_on_set\": \"Working age\"\n              }\n            ],\n            \"disability_support\": [\n              {\n                \"human_assistance\": {\n                  \"frequency\": \"Permanent\",\n                  \"type\": \"mobility\",\n                  \"support_status\": \"Required\"\n                }\n              }\n            ],\n            \"transport_requirement\": \"Adaptable vehical\",\n            \"housing_type\": \"Social housing\",\n            \"programs_enrollments\": [\n              {\n                \"programme_name\": \"financial_assistance\",\n                \"programme_identifier\": \"AD234\"\n              }\n            ],\n            \"registration_date\": \"2023-01-10T00:00:00Z\",\n            \"last_updated\": \"2023-09-20T00:00:00Z\"\n          }\n        }\n      },\n      \"pagination\": {\n        \"page_size\": 2000,\n        \"page_number\": 5,\n        \"total_count\": 24250\n      },\n      \"locale\": \"en\"\n    }\n  ]\n}",
             "latency": 0,
             "statusCode": 200,
             "label": "Search DR",
@@ -240,6 +240,24 @@
         "documentation": "Async search",
         "method": "post",
         "endpoint": "dr/search",
+        "request": {
+          "body": {
+            "identifier_value": "847951632"  
+          },
+          "rules": [
+            {
+              "key": "body.identifier_value",
+              "operator": "exists",
+              "value": "true"
+            },
+            {
+              "key": "body.identifier_value",
+              "operator": "matches",
+              "value": "^[0-9]{9}$" 
+            }
+          ],
+          "rulesOperator": "AND"
+        },
         "responses": [
           {
             "uuid": "e14155cf-b6f8-4367-2fg3-7dddba2d9c14",
