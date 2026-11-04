@@ -2,8 +2,10 @@ name: DR compliance
 
 # Runs the DCI DR compliance suite against the bundled Mockoon mocks on every push and pull
 # request: a pass / fail check, a per-feature summary on the run page, and the HTML / JUnit
-# reports as a downloadable artifact. Runs on main also publish the HTML report to GitHub
-# Pages (https://spdci.github.io/DR-Mockup-Compliance/), passing or not.
+# reports as a downloadable artifact. Runs on main also publish a site to GitHub Pages
+# (https://spdci.github.io/DR-Mockup-Compliance/), passing or not: the HTML report of the run and
+# a Swagger UI of the DR API (api/; api/?spec=mock is the same API on the local mocks). Pull
+# requests attach the same site as the dr-compliance-site artifact.
 
 on:
   push:
@@ -87,19 +89,28 @@ jobs:
           if-no-files-found: ignore
           retention-days: 30
 
-      # The github-pages environment only accepts deployments from main.
-      - name: Prepare the Pages site
-        if: ${{ !cancelled() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && hashFiles('test/result/dr_compliance_report.html') != '' }}
-        run: |
-          mkdir -p site
-          cp test/result/dr_compliance_report.html site/index.html
+      - name: Build the site (landing page, test report, Swagger UI)
+        if: ${{ !cancelled() && hashFiles('test/result/dr_compliance_report.html') != '' }}
+        run: >
+          node site/build-site.mjs --out "$RUNNER_TEMP/site"
+          --report test/result/dr_compliance_report.html
+          --junit test/result/dr_compliance.xml
 
+      - name: Upload the site (preview)
+        if: ${{ !cancelled() && github.event_name == 'pull_request' && hashFiles('test/result/dr_compliance_report.html') != '' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: dr-compliance-site
+          path: ${{ runner.temp }}/site
+          retention-days: 14
+
+      # The github-pages environment only accepts deployments from main.
       - name: Upload the Pages site
         id: pages
-        if: ${{ !cancelled() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && hashFiles('site/index.html') != '' }}
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && hashFiles('test/result/dr_compliance_report.html') != '' }}
         uses: actions/upload-pages-artifact@v5
         with:
-          path: site
+          path: ${{ runner.temp }}/site
 
   publish:
     needs: compliance

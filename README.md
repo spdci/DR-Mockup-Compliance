@@ -232,8 +232,23 @@ mocks, runs the whole suite and reports:
 - a per-feature results table, with the failing scenarios, on the run's summary page
   (written by `test/ci/summary.mjs`);
 - the HTML, JUnit and Cucumber JSON reports as the `dr-compliance-report` artifact;
-- on `main`, the HTML report of the latest run, published to GitHub Pages:
-  <https://spdci.github.io/DR-Mockup-Compliance/>.
+- on `main`, a site published to GitHub Pages, <https://spdci.github.io/DR-Mockup-Compliance/>
+  (built by `site/build-site.mjs`; pull requests attach it as the `dr-compliance-site` artifact):
+  - the results and HTML report of the latest run;
+  - `api/`: a Swagger UI with two definitions: the **DCI DR API v1.0.0** as published
+    (`docs/openapi/dr_api_v1.0.0.yaml`, from spdci/api-standards `release/yaml`, commit `ce1f22c`), and
+    the **DR mock**, the same API on the mock paths (`/dr/...`) and ports (3333 DR side, 3334 SP side).
+    Start the mocks locally and use "Try it out" to send requests to them
+    ([`api/?spec=mock`](https://spdci.github.io/DR-Mockup-Compliance/api/?spec=mock) opens it directly).
+    Each request body defaults to the valid request the suite sends, and asynchronous requests name
+    the SP mock as `sender_uri`, so their callbacks land there. `/registry/sync/txn/status` is not
+    served by the mock and is left out of that definition.
+
+To build the site locally (after `npm install` in `test/`):
+
+```bash
+node site/build-site.mjs --out site-out --report test/result/dr_compliance_report.html --junit test/result/dr_compliance.xml
+```
 
 ### Testing your own implementation
 
