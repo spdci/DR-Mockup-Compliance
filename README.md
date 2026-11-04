@@ -222,6 +222,19 @@ cd test && npm install && npx cucumber-js
 
 Reports are written to `test/result` (HTML, JUnit XML, Cucumber messages).
 
+### Continuous integration
+
+`.github/workflows/compliance.yml` runs on every push to `main` and every pull request. It
+checks that `mockoon-*.json` are up to date with the test schemas and fixtures, starts the
+mocks, runs the whole suite and reports:
+
+- a pass / fail **DR compliance** check on the pull request;
+- a per-feature results table, with the failing scenarios, on the run's summary page
+  (written by `test/ci/summary.mjs`);
+- the HTML, JUnit and Cucumber JSON reports as the `dr-compliance-report` artifact;
+- on `main`, the HTML report of the latest run, published to GitHub Pages:
+  <https://spdci.github.io/DR-Mockup-Compliance/>.
+
 ### Testing your own implementation
 
 | Variable | Default | Purpose |
