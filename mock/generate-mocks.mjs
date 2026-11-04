@@ -40,6 +40,13 @@ const REG_TYPE = 'ns:org:RegistryType:DR';
 const DR_ID = 'dr.example.org';
 const NOW = '{{now "yyyy-MM-dd\'T\'HH:mm:ss.SSSxxx"}}';
 const JSON_HEADERS = [{ key: 'Content-Type', value: 'application/json' }];
+// Environment headers: CORS on every response, so the Swagger UI (site/api) can call the mocks from a browser.
+const ENV_HEADERS = [
+  ...JSON_HEADERS,
+  { key: 'Access-Control-Allow-Origin', value: '*' },
+  { key: 'Access-Control-Allow-Methods', value: 'GET,POST,OPTIONS' },
+  { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With' },
+];
 
 // ---------------------------------------------------------------------------
 // Handlebars templates
@@ -411,7 +418,7 @@ function environment({ key, name, port, routes, data, callbacks = [] }) {
     proxyRemovePrefix: false,
     tlsOptions: { enabled: false, type: 'CERT', pfxPath: '', certPath: '', keyPath: '', caPath: '', passphrase: '' },
     cors: true,
-    headers: JSON_HEADERS,
+    headers: ENV_HEADERS,
     proxyReqHeaders: [{ key: '', value: '' }],
     proxyResHeaders: [{ key: '', value: '' }],
     data,
